@@ -1,1 +1,77 @@
-Hello
+SELECT TOP (1000) [OrderID]
+      ,[OrderDate]
+      ,[OrderDescription]
+  FROM [dbo].[Orders]
+
+
+  
+SELECT
+o.name AS tableName, pnp.pdw_node_id, pnp.distribution_id, pnp.rows FROM
+sys.pdw_nodes_partitions AS pnp 
+JOIN sys.pdw_nodes_tables AS NTables ON pnp.object_id = NTables.object_id AND pnp.pdw_node_id=NTables.pdw_node_id
+JOIN sys.pdw_table_mappings AS TMap ON NTables.name = TMap.physical_name  AND substring(TMap.physical_name, 40, 10) = pnp.distribution_id
+JOIN sys.objects AS o ON TMap.object_id = o.object_id
+WHERE o.name in ('orders')
+ORDER BY distribution_id
+
+
+
+
+CREATE TABLE Orders2
+(
+OrderID int IDENTITY(1,1) NOT NULL
+,OrderDate datetime NOT NULL
+,OrderDescription char (15) DEFAULT 'NewOrder')
+WITH
+(CLUSTERED COLUMNSTORE INDEX,DISTRIBUTION= HASH (OrderDate));
+
+
+--Insert rows into table
+SET NOCOUNT ON
+DECLARE @i INT SET @i = 1
+DECLARE @date DATETIME SET @date = dateadd(mi,@i, '2017-02-04')
+WHILE (@i <= 60)
+BEGIN
+INSERT INTO [Orders2] (OrderDate) SELECT @date
+SET @i=@i+1;
+END
+
+
+SELECT
+o.name AS tableName, pnp.pdw_node_id, pnp.distribution_id, pnp.rows FROM
+sys.pdw_nodes_partitions AS pnp 
+JOIN sys.pdw_nodes_tables AS NTables ON pnp.object_id = NTables.object_id AND pnp.pdw_node_id=NTables.pdw_node_id
+JOIN sys.pdw_table_mappings AS TMap ON NTables.name = TMap.physical_name  AND substring(TMap.physical_name, 40, 10) = pnp.distribution_id
+JOIN sys.objects AS o ON TMap.object_id = o.object_id
+WHERE o.name in ('orders3')
+ORDER BY distribution_id
+
+
+
+
+
+CREATE TABLE Orders3
+(
+OrderID int IDENTITY(1,1) NOT NULL
+,OrderDate datetime NOT NULL
+,OrderDescription char (15) DEFAULT 'NewOrder')
+WITH
+(CLUSTERED COLUMNSTORE INDEX,DISTRIBUTION= HASH (OrderDate));
+
+DECLARE @i INT SET @i = 1
+DECLARE @date DATETIME SET @date = dateadd(mi, @i, '2017-02-04') 
+
+WHILE (@i <= 5)
+BEGIN
+
+INSERT INTO [Orders3] (OrderDate) SELECT @date
+INSERT INTO [Orders3] (OrderDate) SELECT dateadd(week, 1, @date)
+INSERT INTO [Orders3] (OrderDate) SELECT dateadd(week, 2, @date)
+INSERT INTO [Orders3] (OrderDate) SELECT dateadd(week, 3, @date)
+INSERT INTO [Orders3] (OrderDate) SELECT dateadd(week, 4, @date)
+INSERT INTO [Orders3] (OrderDate) SELECT dateadd(week, 5, @date)
+SET @i=@i+1;
+
+END
+
+
