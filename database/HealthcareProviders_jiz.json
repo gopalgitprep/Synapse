@@ -1,0 +1,27 @@
+{
+	"name": "HealthcareProviders_jiz",
+	"properties": {
+		"Name": "HealthcareProviders_jiz",
+		"EntityType": "DATABASE",
+		"Description": "",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"HealthcareProviders\",\"Version\":\"1.3.0\"}}}",
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://synfs@syngopal.dfs.core.windows.net/HealthcareProviders_jiz",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "synwsgopal-WorkspaceDefaultStorage"
+			}
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 1,
+		"ObjectId": "67060cc5-2cfd-48b6-86fb-0b6001a71052"
+	},
+	"type": "DATABASE"
+}

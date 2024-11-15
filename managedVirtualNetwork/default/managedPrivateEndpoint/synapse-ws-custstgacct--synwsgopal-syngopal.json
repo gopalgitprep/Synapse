@@ -1,0 +1,7 @@
+{
+	"name": "synapse-ws-custstgacct--synwsgopal-syngopal",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/0bc0a496-81f2-4871-8507-70c69dc3f786/resourceGroups/adb_rg/providers/Microsoft.Storage/storageAccounts/syngopal",
+		"groupId": "dfs"
+	}
+}

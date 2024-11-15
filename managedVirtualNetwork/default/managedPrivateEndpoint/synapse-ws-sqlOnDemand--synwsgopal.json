@@ -1,0 +1,10 @@
+{
+	"name": "synapse-ws-sqlOnDemand--synwsgopal",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/0bc0a496-81f2-4871-8507-70c69dc3f786/resourceGroups/adb_rg/providers/Microsoft.Synapse/workspaces/synwsgopal",
+		"groupId": "sqlOnDemand",
+		"fqdns": [
+			"synwsgopal-ondemand.3db662c8-ca18-4863-9e75-9d4f4dfa750d.sql.azuresynapse.net"
+		]
+	}
+}
